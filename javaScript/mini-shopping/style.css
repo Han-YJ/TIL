@@ -83,7 +83,7 @@ body {
   width: 60%;
   height: 60%;
   padding-left: 0;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .item {
