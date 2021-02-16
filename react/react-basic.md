@@ -17,6 +17,24 @@
   - state가 변하면 render()를 불러와 자동으로 업데이트
   - Virtual DOM Tree를 사용하고, update 내용을 모아서 한번에 update하기 때문에 성능 저하 x
 
+## React packages
+
+### .gitignore
+- 버전관리가 필요하지 않은 것들. tracking x
+
+### package.json
+- 프로젝트에서 외부적으로 쓰고 있는 라이브러리와 버전
+
+### node_modules
+- module을 추가했을 때 자동적으로 추가
+
+### puclic
+배포할때 외부적으로 보여지는 것들
+- manifest.json : 웹을 만들때는 필요 x. PWA(progressive web application)을 만들때 필요
+- robots.txt : 웹 크롤링을 할 때 필요
+
+### src
+- index.js : 화면에 보이는 것
 
 ### 참고
 - [React 공식](https://reactjs.org/docs/getting-started.html)
