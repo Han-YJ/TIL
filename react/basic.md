@@ -34,8 +34,18 @@
 - robots.txt : 웹 크롤링을 할 때 필요
 
 ### src
-- index.js : 화면에 보이는 것
+- index.js : 화면에 보이는 것  
 
+## State, Props
+
+### State
+- component 내에서 정의한 state object
+
+### Props
+- component 밖에서 주어지는 데이터 => component의 재사용률 ↑
+- 상황에 따라 데이터를 받아 그 데이터에 맞게 UI를 보여주기 위해 사용
+
+---
 ### 참고
 - [React 공식](https://reactjs.org/docs/getting-started.html)
 
