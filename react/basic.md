@@ -40,6 +40,7 @@
 
 ### State
 - component 내에서 정의한 state object
+- 상위에서 하위로 state를 props를 통해 전달
 
 ### Props
 - component 밖에서 주어지는 데이터 => component의 재사용률 ↑
