@@ -1,8 +1,8 @@
 ## Component
-- Class
+- Class (rcc)  
   - React.Component
   - React.PureComponent
-- Function
+- Function (rsi)
   - function
   - memo(funciton)
   - React Hook
@@ -18,6 +18,7 @@
 - shouldComponentUpdate() 구현 o (Component에는 x)
 - Implements it with a **shallow** props and state comparison
   => object 안의 data가 바뀌어도 동일한 object라면 true라고 판단
+
 ### shallow comparison 에 update된 data를 알리는 방법?
 1. 전달할 때 변화하는 것을 따로 빼서 object로 전달
 2. Deconstructing object : 새로운 object를 만들어서 전달

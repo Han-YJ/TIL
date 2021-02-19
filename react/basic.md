@@ -17,6 +17,7 @@
   - state가 변하면 render()를 불러와 자동으로 업데이트
   - Virtual DOM Tree를 사용하고, update 내용을 모아서 한번에 update하기 때문에 성능 저하 x
 
+---
 ## React packages
 
 ### .gitignore
@@ -36,7 +37,7 @@
 ### src
 - index.js : 화면에 보이는 것 
 
-
+---
 ## State, Props
 
 ### State

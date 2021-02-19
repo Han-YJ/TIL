@@ -23,7 +23,7 @@ Keys help React identify which items have changed, are added, or are removed. Ke
 - state가 변경되면 render()실행(lifecycle methods)
 
 ### Fucntion
-- 간단하게 function
+- 간단하게 function. this를 쓰지 않아 코드가 더 깔끔
 - 상태없이 정적일 경우
 - state & lifecycle methods x
 - React 16.8~ React Hook에서는 class가 하는 것들 사용가능
