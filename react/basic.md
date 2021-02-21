@@ -11,7 +11,8 @@
 ### React basic
 - Component들로 이루어진 UI library
   - Component? 한가지 기능을 수행하는 UI 단위
-  - 재사용이 가능한 component들을 모아서 원하는 웹 application을 만들 수 있다
+  - 독립적, 재사용성 ⭕
+  - component들을 모아서 원하는 웹 application을 만들 수 있다
   - cohesive : 다른 component와는 독립적으로 해당하는 state, logic이 있다
 - Re-render the whole app on every update
   - state가 변하면 render()를 불러와 자동으로 업데이트
