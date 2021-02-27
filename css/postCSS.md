@@ -6,11 +6,11 @@
 
 ## 모듈화 
 ```
-//css 파일
+//css
 button.css -> button.module.css 
 
 //button1.jsx
-import styles from './button1.module.css';
+import styles from './button.module.css';
 ...
 <div className={styles.button}>
 
