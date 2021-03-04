@@ -1,4 +1,4 @@
-# SQL 문법
+# SQL 응용
 
 ## 분류
 - DDL : 정의어. 테이블이나 관계의 구조를 생서하는 데 사용 (CREATE, ALTER, DROP)
