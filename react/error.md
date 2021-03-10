@@ -15,3 +15,6 @@ doskey 사용할 명령어 =  기존 명령어
 doskey ls = dir
 doskey clear = cls
 ```
+
+## Netlify deploy 할 때, 빈화면 나오는 것
+- package.json에 hompage를 "."로 설정하면 해결
