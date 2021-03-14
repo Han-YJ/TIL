@@ -8,7 +8,7 @@ const array1 = [
   {id: '2', count: 0}
 ]
 
-const array2 = array;
+const array2 = array1;
 const array3 = [...array];
 
 // => array2는 array1의 참조값과 같기때문에 동일한 object를 가리킴
