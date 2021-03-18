@@ -18,3 +18,6 @@ doskey clear = cls
 
 ## Netlify deploy 할 때, 빈화면 나오는 것
 - package.json에 hompage를 "."로 설정하면 해결
+
+## .env 사용할 때 유효하지 않은 API_KEY 등
+- .env 파일은 최상위경로에 위치해야 함
