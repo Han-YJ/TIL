@@ -47,8 +47,24 @@ public class ExampleClass {
 - 객체에 추가적인 요건을 동적으로 첨가. 서브클래스를 만들어 기능을 유연하게 확장할 수 있는 방법
 - [Decorator예제](decorator.md)
 
+## Proxy
+- 어떤 객체에 대한 접근을 제어하기 위한 용도로 대리인에 해당하는 객체를 제공
+- 데코레이터 패턴과 구현방법이 유사한데, 프록시 패턴은 실제 객체에 대한 접근을 제어하는것에 초점이 맞춰져있는 반면,  
+데코레이터 패턴은 기존 객체의 기능을 확장하는데 초점을 맞춘다
+
+## Template method
+> 상속을 통해 슈퍼클래스의 기능을 확장할 때 사용하는 가장 대표적인 방법
+> 변하지 않는 기능은 슈퍼클래스에 만들어두고 자주 변경되며 확장할 기능은 서브클래스에서 만들도록 한다(토비의 스프링3.1)
+- [Template-Method예제](template-method.md)
+
+## Template Callback
+- 전략패턴과 유사한데, 전략 패턴의 기본 구현 방법에 콜백(익명 클래스)를 사용하는 방식
+- DI에서 사용하는 패턴
+
+  
 ### 참조
 - [디자인패턴-8가지 패턴](https://brunch.co.kr/@springboot/31)
 - [다양한 싱글톤의 구현](https://elfinlas.github.io/2019/09/23/java-singleton/)
 - [전략 패턴(Strategy Pattern)](https://victorydntmd.tistory.com/292)
 - [데코레이터 패턴](https://johngrib.github.io/wiki/decorator-pattern/)
+- [템플릿 메소드 패턴](https://yaboong.github.io/design-pattern/2018/09/27/template-method-pattern/)
