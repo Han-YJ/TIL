@@ -37,3 +37,12 @@ mssql_close();
 
 echo json_encode($final_result);
 ```
+
+## date형식의 loop문 만들기
+```php
+while(strtotime($start) <= strtotime($end)) {
+    //DO SOMETHING...
+
+    $start = date ("Y-m-d", strtotime("+1 day", strtotime($start)));
+}
+```
