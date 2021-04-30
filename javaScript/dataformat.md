@@ -8,3 +8,6 @@
   ? value.toLocaleString('en-US')
   : value}
 ```
+
+## String to Number
+str *1 
