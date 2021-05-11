@@ -11,7 +11,11 @@ format(new Date(value), 'M-d(eee)', { locale: ko })
 format(date, 'format형식', opation);
   
 ## locale
-요일 등을 한글로 바꿀 수 있다
+요일 등을 한글로 변환
+
+
+## eachDay
+날짜 사이의 날짜들 구하기
 
 ### 참고
 - [공식 date-fns docs](https://date-fns.org/docs/Getting-Started)
