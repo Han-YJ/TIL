@@ -46,3 +46,22 @@ const customTooltipLabel = (label) => {
   labelFormatter={customTooltipLabel}
 />
 ```
+- name, value 둘다 바꾸는 경우
+- (name, value) => [name, value]
+```js
+const tooltipFormat = (value, name) => {
+    const newValue = `${(value * 1).toLocaleString('en-US')}원`;
+    if (category === 'time') {
+      let timeRange = `${name}:00 ~ ${name}:59`;
+      return [newValue, timeRange];
+    } else if (category === 'day') {
+      let timeRange = format(new Date(name), 'M월 d일');
+      return [newValue, timeRange];
+    } else if (category === 'week') {
+      return [newValue, getWeekDay(name * 1)];
+    } else {
+      let timeRange = format(new Date(name), 'M월');
+      return [newValue, timeRange];
+    }
+  };
+```
