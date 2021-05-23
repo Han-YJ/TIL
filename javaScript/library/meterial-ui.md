@@ -56,6 +56,10 @@ valueGetter: (params) =>
   `${params.getValue(params.id, 'firstName') || ''} ${
     params.getValue(params.id, 'lastName') || ''
   }`,
+
+//type이 option인 것만 이름앞에 <옵션> 붙이기?
+{ field: 'name', headerName: '이름', width: 250, 
+valueGetter: params => (params.getValue(params.id, 'type') === 'option' ? `<옵션> ${params.value}` : params.value )},
 ```
 - valueFormatter : value format
 ```js
