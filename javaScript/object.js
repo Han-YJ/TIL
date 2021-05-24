@@ -5,7 +5,6 @@
 // Nearly all objects in JavaScript are instances of Object
 // object = { key : value }; javaScript에서 object는 key와 value의 집합체이다
 
-
 // 1. Literals and properties
 
 //두가지 방법으로 만들 수 있다
@@ -31,7 +30,6 @@ console.log(ellie.hasJob);
 
 //동적으로 추가, 삭제가 가능하지만 이렇게 하면 유지보수가 힘듦
 
-
 // 2. Computed properties 계산된 properties라는 말
 // key should be always string
 console.log(ellie.name);
@@ -47,7 +45,6 @@ function printValue(obj, key) {
 printValue(ellie, 'name');
 printValue(ellie, 'age');
 
-
 // 3. Property value shorthand
 const person1 = { name: 'bob', age: 2 };
 const person2 = { name: 'steve', age: 3 };
@@ -57,8 +54,8 @@ function makePerson(name, age) {
   return {
     name,
     age,
-  }
-}//값만 전달해주면 object를 만들어주는 함수(key와 value의 이름이 동일하다면 위처럼 생략 가능 in JS)
+  };
+} //값만 전달해주면 object를 만들어주는 함수(key와 value의 이름이 동일하다면 위처럼 생략 가능 in JS)
 const person4 = makePerson('elile', 30);
 
 const person5 = new Person('elile', 30); //template처럼 다른 기능을 하지않고 object만 생성해준다면 Constructor로 작성
@@ -72,12 +69,10 @@ function Person(name, age) {
   // return this;
 }
 
-
 // 5. in operator: property existence check (key in obj) : 해당하는 object안에 key가 있는지 없는지 확인
 console.log('name' in ellie);
 console.log('age' in ellie);
 console.log('random' in ellie);
-
 
 // 6. for..in vs for..of
 // project하다보면 굉장히 유용
@@ -95,7 +90,6 @@ const array = [1, 2, 4, 5];
 for (let value of array) {
   console.log(value);
 }
-
 
 // 7. Fun cloning
 // Object.assign(dest, [obj1, obj2, obj3...])
@@ -124,3 +118,10 @@ const fruit2 = { color: 'blue', size: 'big' };
 const mixed = Object.assign({}, fruit1, fruit2);
 console.log(mixed.color); //blue (뒤에 나온것일수록 앞의것을 덮어쓴다)
 console.log(mixed.size); //big
+
+//variable를 key값으로 object만들기(es6+)
+```
+{
+  [someVariable]: someValueArray;
+}
+```;

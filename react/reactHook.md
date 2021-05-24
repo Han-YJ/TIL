@@ -73,7 +73,7 @@ useEffect(() => {
   }, [getInitNoti, params]);
   
 
-  //useCallback을 이요하는 방법
+  //useCallback을 이용하는 방법
   const getInitNoti = useCallback(async () => {
   const res = await apis.notification.getNotice(params);
   setNotiData(res.data.user_notices);
