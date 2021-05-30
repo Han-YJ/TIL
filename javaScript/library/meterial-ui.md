@@ -58,9 +58,33 @@ valueGetter: (params) =>
   }`,
 
 //type이 option인 것만 이름앞에 <옵션> 붙이기?
-{ field: 'name', headerName: '이름', width: 250, 
-valueGetter: params => (params.getValue(params.id, 'type') === 'option' ? `<옵션> ${params.value}` : params.value )},
+const object = [
+  {
+    menu: {count: 10, price: 4000}
+  },
+  {
+    menu2: {count: 6, price: 8000}
+  }
+]
+
+//header
+{ field: menu, headerName: menu, width: 250, 
+valueGetter: params => {
+  if(params.value){
+    return params.value.count //or params.value.price
+  } else {
+    return 0
+  }  
+  }
+
+params.value ? (params.value.count).toLocaleString('en-US') : 0
 ```
+```js
+//nested value 에 접근하기
+{ field: 'name', headerName: '이름', width: 250, 
+valueGetter: params => (params.getValue(params.id, 'type') === 'option' ? `<옵션> ${params.value}` : params.value )}
+```
+  
 - valueFormatter : value format
 ```js
 { field: 'amount', headerName: '판매총액', width: 150, valueFormatter: params => params.value.toLocaleString('en-US')},
