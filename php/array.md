@@ -47,3 +47,16 @@ while(strtotime($start) <= strtotime($end)) {
 }
 ```
 
+## string array to sql values
+```php
+$affiliates = '';
+foreach($affiliate_ids as $affiliate){
+  $affiliates_array[] = $affiliate[0];
+  
+}
+$affiliates = implode($affiliates_array, "','"); 
+
+//in sql
+affiliate_id in ('$affiliates')
+```
+
