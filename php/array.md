@@ -52,11 +52,13 @@ while(strtotime($start) <= strtotime($end)) {
 $affiliates = '';
 foreach($affiliate_ids as $affiliate){
   $affiliates_array[] = $affiliate[0];
-  
+  //[a,b,c,d]
 }
 $affiliates = implode($affiliates_array, "','"); 
+//a','b','c',d
 
 //in sql
 affiliate_id in ('$affiliates')
+//affiliate_id in ('a,b,c,d')
 ```
 
