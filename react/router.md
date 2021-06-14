@@ -71,5 +71,36 @@ const Home = (props) => {
 }
 ```
 
+## external link 
+```js
+//material listitem 이용 
+//Good
+<ListItem
+  button
+  target='_blank'
+  href='https://smartstore.naver.com/~~~~~'
+  component='a'
+>
+  <ListItemIcon className={classes.icon}>
+    <DescriptionOutlinedIcon />
+  </ListItemIcon>
+  <ListItemText primary='용지구매' />
+</Listitem>
+
+//Bad
+<ListItem
+  button
+  target='_blank'
+  to='/smartstore.naver.com/~~~~~'
+  component={Link}
+>
+  <ListItemIcon className={classes.icon}>
+    <DescriptionOutlinedIcon />
+  </ListItemIcon>
+  <ListItemText primary='용지구매' />
+</Listitem>
+//이렇게하면 baseurl + /smartstore.naver.com/~~~~ 로 연결 
+```
+
 ## 참조
 - [React-router-web](https://reactrouter.com/web/guides/quick-start)
