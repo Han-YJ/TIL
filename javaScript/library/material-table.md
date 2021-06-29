@@ -1,4 +1,5 @@
 # material-table
+- nested object를 사용하면 custom 해줘야 할 것들이 많다..!
 
 ## issue
 - export
@@ -76,4 +77,14 @@
     },
   }}
 />
+```
+
+## nested object 사용 시, sorting 안되는 문제
+customSort 설정
+```js
+{
+  title: 'Test',
+  field: 'test',
+  customSort: (a,b) => a.test.getTime() - b.test.getTime()
+}
 ```
