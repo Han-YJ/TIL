@@ -83,3 +83,6 @@ const localization = {
   }}
 />
 ```
+
+### 참고
+- https://github.com/mbrn/material-table/issues/2253
