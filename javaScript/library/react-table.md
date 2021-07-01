@@ -50,3 +50,36 @@ const toggleCancelColumns = (e) => {
 
 ### 참고
 - https://react-table.tanstack.com/docs/examples/column-hiding
+
+
+## localization
+```js
+const localization = {
+  body: {
+    emptyDataSourceMessage: '데이터가 없습니다.',
+  },
+  toolbar: {
+    exportTitle: '내보내기',
+    exportCSVName: '엑셀 다운로드',
+    showColumnsTitle: '컬럼보기',
+    addRemoveColumns: '컬럼 추가/삭제',
+  },
+};
+//홈페이지에는 exportName라고 나와있으나 exportCSVNmae or exportPDFName으로 사용해야 한다
+
+<MaterialTable
+  tableRef={tableRef}
+  className={classes.table}
+  title={title}
+  icons={tableIcons}
+  columns={columns}
+  data={data}
+  options={options}
+  localization={localization}
+  components={{
+    Toolbar: (props) => (
+      <MTableToolbar className={classes.toolbar} {...props} />
+    ),
+  }}
+/>
+```
