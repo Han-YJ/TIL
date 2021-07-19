@@ -19,6 +19,8 @@ const [count, setCount] = useState(0);
 
 ## useCallback()
 - 함수 재사용
+- 함수 생성 자체가 오래걸리는 경우(=함수 내의 연산이 복잡한 경우)에 쓰면 최적화에 도움
+- 자식 컴포넌트에 함수를 props로 내릴대는 usecallback을 반드시 사용(자식 리렌더링 방지)
 ```
 const memoizedCallback = useCallback(
   () => {
@@ -88,7 +90,13 @@ useEffect(() => {
   //(useCallback이 없다면 리렌더링 될 때마다, 계속 getInitNoti함수를 만들고 실행)
   ```
 
+## useMemo와 useCallback 차이점
+- useMemo : 함수 return 값을 기억
+- useCallback : 함수 reference 를 기억
+
 
 ### 참고
 - [React Hooks](https://reactjs.org/docs/hooks-intro.html)
 - [Hooks API Reference](https://ko.reactjs.org/docs/hooks-reference.html)
+
+- https://likejirak.tistory.com/48

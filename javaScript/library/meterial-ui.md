@@ -99,4 +99,49 @@ valueGetter: params => (params.getValue(params.id, 'type') === 'option' ? `<옵�
 ```
 - row의 id 필수
 
+## Datepickers ref
+datepicker에는 ref가 아닌 inputRef사용하면 값을 가져올 수 있다
+```js
+<form ref={formRef}>
+  <div>
+    <MuiPickersUtilsProvider utils={DateFnsUtils} locale={ko}>
+      <DatePicker
+        label='StartDate'
+        value={startDate}
+        onChange={setStartDate}
+        animateYearScrolling
+        inputRef={startDateRef}
+      />
+      <DatePicker
+        label='EndDate'
+        value={endDate}
+        onChange={setEndDate}
+        animateYearScrolling
+        inputRef={endDateRef}
+      />
+    </MuiPickersUtilsProvider>
+  </div>
+  <input
+    ref={contactRef}
+    type='text'
+    placeholder='받으실 E-mail 또는 FAX번호를 입력해주세요'
+  ></input>
+  <Button name='Submit' onClick={onSubmit}>
+    제출하기
+  </Button>
+</form>
+
+const onSubmit = (e) => {
+    const taxRequest = {
+      startDate: startDateRef.current.value || '',
+      endDate: endDateRef.current.value || '',
+      contact: contactRef.current.value || '',
+    };
+    console.log(taxRequest);
+    //{"startDate": "6월 1일","endDate": "6월 12일","contact": "sdf"}
+  };
+
+```
+
+
 
