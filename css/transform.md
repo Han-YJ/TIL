@@ -25,5 +25,9 @@ transform: rotate(45deg);
 transform: translate(100px, 100px) scale(2) rotate(46deg);
 ```
 
+## border blur issue
+- 작은것을 크게 키웠을때 border가 블러같이 보이는 문제
+- 크기보다 작게 transform 지정한 후 hover등에 scale(1)로 지정
+
 ### 참고
 - [MDN transform](https://developer.mozilla.org/en-US/docs/Web/CSS/transform)
