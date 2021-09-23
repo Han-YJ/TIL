@@ -54,5 +54,8 @@ return (
 
 ### 참고
 - React Hooks useContext Tutorial (https://www.youtube.com/watch?v=lhMKvyLRWo0)
+- Learn useContext In 13 Minutes (https://www.youtube.com/watch?v=5LrDIWkK_Bc)
+
+
 
 - https://fatmali.medium.com/use-context-and-custom-hooks-to-share-user-state-across-your-react-app-ad7476baaf32
