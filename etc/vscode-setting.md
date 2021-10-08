@@ -9,3 +9,6 @@
   }
 }
 ```
+
+## setting 동기화
+- File - Preferences - Settings Sync is On 으로 깃헙 연결
