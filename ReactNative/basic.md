@@ -4,7 +4,7 @@
   ```bash
   $ yarn add react-native
   ```
-- expo (optional)
+- [expo](./expo.md) (optional)
     - react-native 개발을 쉽게 할 수 있도록 도와주는 프레임워크/플랫폼
   ```bash
   $ yarn add expo-cli
