@@ -1,9 +1,22 @@
 # React-native-webview
 
 ```js
-    <View style={{ flex: 1, marginTop: 20 }}>
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    marginTop: Platform.OS === 'ios' ? 0 : 15,
+  },
+  webview: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+    <View style={styles.container}>
       <WebView
-        style={styles.container}
+        style={styles.webview}
         source={{ uri: 'http://sales.domain.com' }}
       />
     </View>
@@ -14,7 +27,24 @@
 ## Issue
 ### backButton 처리
 - backbutton 누르면 exit app 되는 현상
-
+  
+App.js
+```js
+const handleClose = () => {
+    Alert.alert('앱 종료', '종료하시겠습니까?', [
+      {
+        text: '아니오',
+        onPress: () => null,
+      },
+      {
+        text: '예',
+        onPress: () => BackHandler.exitApp(),
+      },
+    ]);
+  };
+```
+  
+  WebView.js
 ```js
   const [webview, setWebview] = useState();
   const [goBackable, setGoBackable] = useState(false);
@@ -65,8 +95,10 @@
         injectedJavaScript={injectedCode}
         onMessage={(event) => {
           const url = event.nativeEvent.data;
-          setGoBackable(url !== BASE_URL);
-          console.log('onMessage', url);
+          const baseUrl = `${BASE_URL}/`;
+          const homeUrl = `${BASE_URL}/Home`;
+          //홈 url일 경우 백버튼누르면 종료할건지 확인
+          setGoBackable(url !== baseUrl && url !== homeUrl);
         }} 
       />
 

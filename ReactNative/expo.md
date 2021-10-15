@@ -55,7 +55,7 @@ expo build:android
 
 expo build:ios
 ```
-  expo build:android에서 app을 선택하면(app-bundle 🙅‍♂️) 빌드 후 나오는 링크를 통해 .apk를 받을 수 있다
+  expo build:android에서 app을 선택하면(app-bundle 🙅‍♂️) 빌드 후 나오는 링크를 통해 .apk 파일을 받을 수 있다
 
 
 <br>
