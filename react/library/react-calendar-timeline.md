@@ -128,5 +128,18 @@ const ItemRenderer = ({ item, itemContext, getItemProps }) => {
 
 ```
 
+### date format 바꾸기
+- date header를 한줄로 고정하고 간단하게 표현하기 위해 수정
+- unit은 day
+```js
+//package의 default config 수정
+day: {
+    "long": 'YY-MM-DD',
+    mediumLong: 'MM-DD',
+    medium: 'D',
+    "short": 'D'
+  },
+```
+
 ### 참고
 - https://github.com/namespace-ee/react-calendar-timeline
