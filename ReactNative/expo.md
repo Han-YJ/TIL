@@ -60,10 +60,25 @@ expo build:ios
 <br>
 <br>
 
-  📌스토어에 등록 된 이후에는 build 명령어는 publish가 같이 된다. test app이 필요한 경우 channel 과 함께 build 해야 한다!!
-
+  📌스토어에 등록 된 이후에는 build 명령어는 publish가 같이 된다. test app이 필요한 경우 release-channel 과 함께 build / publish 해야 한다!!
 
 <br>
 
+
+### Publish
+```bash
+expo publish
+```
+store에 등록되어 있는경우 build만 하더라도 [OTA](#OTA)로 업데이트 된다
+
+
 ### 참고
 - [Expo](https://docs.expo.dev/)
+- [Expo-Updating-your-App](https://docs.expo.dev/bare/updating-your-app/)
+
+## OTA
+Over-the-air : App Store나 Playstore에 앱 최초 등록 이후, JS번들 업데이트의 경우에는 앱을 다시 올리지 않고 업데이트 할 수 있는 기술
+
+App을 실행할 때마다 번들을 체크해서 업데이트할 번들이 있는경우 바로 업데이트 된다. Expo의 경우 Expo서버에 저장되어 있는 번들(publish, build된 버전)이 자동으로 업데이트
+
+
