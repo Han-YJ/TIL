@@ -72,6 +72,16 @@ expo publish
 store에 등록되어 있는경우 build만 하더라도 [OTA](#OTA)로 업데이트 된다
 
 
+### Release-channel
+처음 expo init, publish 하면 release channel은 default. 이후 build 할 때 마다 OTA 업데이트가 이뤄지기 때문에 유저에게 업데이트 하지 않고 standard app을 만들고 싶다면 다른 release channel을 사용해서 build하면 된다
+
+```bash
+expo build:ios --release-channel dev
+expo build:android --release-channel staging
+
+//dev, staging 채널로 build 
+```
+
 ### 참고
 - [Expo](https://docs.expo.dev/)
 - [Expo-Updating-your-App](https://docs.expo.dev/bare/updating-your-app/)
