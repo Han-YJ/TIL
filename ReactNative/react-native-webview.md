@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
 
 
 ## Issue
-### backButton 처리
-- backbutton 누르면 exit app 되는 현상
+### backButton 처리 (종료팝업 추가)
+- backbutton 누르면 exit app 되는 현상 
   
 App.js
 ```js
@@ -103,6 +103,69 @@ const handleClose = () => {
       />
 
 ```
+
+### backButton 처리 (여러번 누르면 종료메세지 & 종료 추가)
+```js
+  const [exitApp, setExitApp] = useState(0);
+  const timeout = useRef(null);
+  const exitMessage = '한번 더 누르시면 앱을 종료합니다.';
+
+const onExit = () => {
+  BackHandler.exitApp();
+  setExitApp(0);
+}
+
+
+  useEffect(() => {
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      () => {
+        //console.log('goBackable', goBackable);
+        if (goBackable) {
+          //뒤로가기 페이지 있을 경우
+          if (exitApp == undefined || exitApp === 0) {
+            
+            webview.goBack();
+            setExitApp(1);
+
+            timeout.current = setTimeout(() => {
+              setExitApp(0);
+            }, 800);
+
+          } else if (exitApp === 1) {
+
+            clearTimeout(timeout.current);
+            ToastAndroid.show(exitMessage, ToastAndroid.SHORT);
+            setExitApp(2);
+
+            timeout.current = setTimeout(() => {
+              setExitApp(0);
+            }, 1000);
+            
+          } else {//exitApp === 2
+            clearTimeout(timeout.current);
+            onExit();
+          }
+        } else {
+          //첫 페이지일 경우
+          if (exitApp == undefined || exitApp === 0) {
+            ToastAndroid.show(exitMessage, ToastAndroid.SHORT);
+            setExitApp(1);
+            timeout.current = setTimeout(() => {
+              setExitApp(0);
+            }, 2000);
+          } else {
+            clearTimeout(timeout.current);
+            onExit();
+          }
+        }
+        return true;
+      }
+    );
+    return () => backHandler.remove();
+  }, [goBackable, exitApp]);
+```
+
 
   
   ### 몇몇 페이지만 흰화면으로 나오는 현상 (렌더x)
