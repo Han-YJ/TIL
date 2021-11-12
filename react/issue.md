@@ -7,6 +7,7 @@ React를 사용하면서 만나는 문제 해결✨
   ### 문제점
   1. main.js 크기가 큰 것
   2. import package들의 크기 (import cost extension)
+  
 
   ### 해결
   1. loadable component 을 사용하여 로그인 페이지와 Home 을 제외한 페이지들은 나중에 불러오기
@@ -14,4 +15,4 @@ React를 사용하면서 만나는 문제 해결✨
   3. console.log, comments 정리
   
   ### 결과
-  1. loadable component 
+  1. loadable component - 로딩속도가 거의 절반으로 줄었다..!
