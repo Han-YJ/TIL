@@ -144,4 +144,44 @@ const onSubmit = (e) => {
 ```
 
 
+## Dialog backbutton 처리
+- Dialog 켜져 있을 때, 백버튼 누르면 dialog 꺼지게
+- 처음엔 history.push를 이용했지만 window.location.hash로 더 간단하게 처리 할 수 있었다
+
+```js
+  const [open, setOpen] = React.useState(window.location.hash === "#alert");
+
+  useEffect(() => {
+    const onHashChange = () => setOpen(window.location.hash === "#alert");
+    window.addEventListener("hashchange", onHashChange);
+    return () => window.removeEventListener("hashchange", onHashChange);
+  }, []);
+
+  function handleClickOpen() {
+    window.location.hash = "#alert";
+  }
+
+  function handleClose() {
+    window.history.back();
+  }
+
+  return (
+   <Dialog
+    open={open}
+    onClose={handleClose}
+    aria-labelledby="alert-dialog-title"
+    aria-describedby="alert-dialog-description"
+  >
+    <div>contents</div>
+  </Dialog>
+
+
+  )
+
+```
+
+### 참고
+- https://codesandbox.io/s/material-demo-7zf07?file=/demo.js
+
+
 
