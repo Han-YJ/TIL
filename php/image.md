@@ -44,7 +44,7 @@ $hex = "0x" . $unpack['hex'];
 $sql = "INSERT INTO [dbo].[Menu_image](menu_code, image) VALUES($menu_code, $hex)";
 ```
 
-### 2. 보내기
+### 2. 꺼내기
 ```PHP
 while ($row = mssql_fetch_array($stmt))
 {
@@ -71,3 +71,22 @@ const getMenuImage = (menuCode) => {
 {menuImage && <img src={menuImage} alt='미리보기 이미지' />}
 
 ```
+
+### DB에 path 저장
+### 1. 넣기
+  - move_uploaded_file
+  
+```php
+//formdata로 보내는 것까지는 동일
+
+$filePath = "imgs/"; //저장할 위치
+$currentTime = date("Y-m-d H-i-s");
+$extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
+
+$image_path = $filePath . $code . "_" . $currentTime . "." . $extension;
+
+
+
+
+```
+
