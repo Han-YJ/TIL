@@ -206,3 +206,34 @@ const onExit = () => {
    
   ```
   - 참고 : [웹뷰 내 a 태그 클릭시 새로운 탭 띄우기 티스토리](https://kyounghwan01.github.io/blog/React/react-native/react-native-webview/#rn%E1%84%8B%E1%85%A6%E1%84%89%E1%85%A5-webview%E1%84%85%E1%85%A9-%E1%84%83%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%90%E1%85%A5-%E1%84%89%E1%85%A9%E1%86%BC%E1%84%89%E1%85%B5%E1%86%AB)
+
+
+  ### webview loading 시 activityindicator 띄우기
+  - renderLoading 이용
+  - onLoadStart, onLoadEnd를 사용해 state true false를 받아서 View로 표시 할 수도 있다. 하지만 onLoadEnd의 시점이 첫 화면이 보인 이후이기 때문에 첫화면 전까지만 보이길 원해서 renderLoading을 이용
+
+  ```js
+    const ActivityIndicatorElement = () => {
+    //making a view to show to while loading the webpage
+    return (
+      <ActivityIndicator
+        color='#009688'
+        size='large'
+        style={styles.activityIndicatorStyle}
+      />
+    );
+  };
+
+  //...
+
+  return (
+    <WebView
+          ref={(ref) => setWebview(ref)}
+          //...
+          //app loading
+          startInLoadingState={true}
+          renderLoading={ActivityIndicatorElement}
+        />
+  )
+  ```
+  - 참고: [React-native-webview renderLoading](https://github.com/react-native-webview/react-native-webview/blob/master/docs/Reference.md#renderloading)

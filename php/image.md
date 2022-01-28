@@ -75,7 +75,7 @@ const getMenuImage = (menuCode) => {
 ### DB에 path 저장
 ### 1. 넣기
   - move_uploaded_file
-  
+
 ```php
 //formdata로 보내는 것까지는 동일
 
@@ -85,8 +85,8 @@ $extension = pathinfo($_FILES['file']['name'], PATHINFO_EXTENSION);
 
 $image_path = $filePath . $code . "_" . $currentTime . "." . $extension;
 
-
-
+//file sav 
+move_uploaded_file($_FILES["file"]['tmp_name'], $image_path);
 
 ```
 
