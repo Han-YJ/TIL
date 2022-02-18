@@ -171,6 +171,58 @@ function SearchColumnFilter({
 }
 ```
 
+## issue
+### 셀 체크박스 클릭 시 row onClick 되는 현상
+- checkbox input onclick 과 row onClick 이 bubble phase
+```js
+//table body
+//...
+ <tbody className={classes.tableBody} {...getTableBodyProps()}>
+  {rows.map((row, i) => {
+    prepareRow(row);
+    return (
+      <tr
+        {...row.getRowProps({
+          //row onclick -> setSelectedRows
+          onClick: (e) => selectRow(e, row),
+        })}
+        className={[
+          classes.row,
+          row.isSelected ? classes.selectedRow : '',
+        ].join(' ')}
+      >
+        {row.cells.map((cell) => {
+          return (
+            <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
+          );
+        })}
+      </tr>
+    );
+  })}
+</tbody>
+//...
+
+//Edit cell checkbox Component
+return (
+  <input
+    className={styles.checkbox}
+    type='checkbox'
+    key={index}
+    value={value}
+    checked={value * 1 === 1 ? true : false}
+    onClick={(e) => e.stopPropagation()} //bubbling을 막기 위한 stopPropagation
+    onChange={onChange}
+    disabled={disabled}
+  />
+)
+```
+
+### 참고
+- https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
+- https://github.com/TanStack/react-table/discussions/2243
+
+
+
 
 
 
