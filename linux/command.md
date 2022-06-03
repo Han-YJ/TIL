@@ -66,3 +66,9 @@ dir1/ file2
 
 ### 참고
 - https://www.lesstif.com/lpt/atime-mtime-ctime-105644095.html
+
+
+## issue
+### 이식성 문제
+
+
