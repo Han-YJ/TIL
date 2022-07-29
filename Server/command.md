@@ -70,5 +70,6 @@ dir1/ file2
 
 ## issue
 ### 이식성 문제
+파일 삭제하는 명령어 : -delete, 
 
 
