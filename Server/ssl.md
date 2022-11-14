@@ -46,12 +46,12 @@ Found the following certs:
 
 - 받은 인증서는 /etc/letsencrypt/live/ 에 폴더별로 저장된다. 여기 있는 파일 경로를 httpd-ssl.conf 에 쓰게된다
 
-- 90일마다 갱신 해줘야 하는데 # certbot renew --dry-run으로 확인해 볼 수 있다. 자동갱신은 crontab에 등록 (4.기타설정 확인)
+- 90일마다 갱신 해줘야 하는데 # certbot renew --dry-run 으로 확인해 볼 수 있다. 자동갱신은 crontab에 등록 (4.기타설정 확인)
 ```
 
 ## 2. httpd-ssl.conf
 - 아래같은 형식으로 도메인마다 추가
-- 기본적으로 써져있는 것들은 건드리지 않았지만 SSLSessionCache 설정이 오류나서 None 으로 수정 ([참고-phpschool](https://www.phpschool.com/gnuboard4/bbs/board.php?bo_table=qna_install&wr_id=74662))
+- 기본적으로 써져있는 것들은 건드리지 않았지만 i 설정이 오류나서 None 으로 수정 ([참고-phpschool](https://www.phpschool.com/gnuboard4/bbs/board.php?bo_table=qna_install&wr_id=74662))
 
 
 ```
@@ -67,8 +67,8 @@ Found the following certs:
 
     SSLEngine on
     SSLCertificateFile /etc/letsencrypt/live/test.test1.com/cert.pem
-    SSLCertificateChainFile /etc/letsencrypt/live/test.test1..com/chain.pem
-    SSLCertificateKeyFile /etc/letsencrypt/live/test.test1..com/privkey.pem
+    SSLCertificateChainFile /etc/letsencrypt/live/test.test1.com/chain.pem
+    SSLCertificateKeyFile /etc/letsencrypt/live/test.test1.com/privkey.pem
 
 </VirtualHost>
 
@@ -80,7 +80,12 @@ LoadModule ssl_module modules/mod_ssl.so 주석제거
 Include conf/extra/httpd-ssl.conf 아래쪽에 있는 include 주석 제거
 ```
 
-## 4. 기타설정
+## 4. 발급 내역 확인
+```
+/bin/certbot certificates
+```
+
+## 5. 기타설정
 - 443 포트 설정 (iptables)
 ```
 # iptables -A INPUT -p tcp -m tcp --sport 80 -j ACCEPT
@@ -127,6 +132,12 @@ RewriteRule (.*) https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 RewriteCon %{REQUEST_FILENAME} !-f
 RewriteRule ^ index.html [QSA,L]
 </Directory>
+```
+
+- 인증서 발급 삭제
+```
+- 인증서 목록을 선택하여 삭제하는 방식
+certbot delete 
 
 ```
 
@@ -143,5 +154,28 @@ RewriteRule ^ index.html [QSA,L]
 
 - mod_ssl install 
  - 처음에 구조를 잘 모르고 설치해야된다는 것만 보고 설치했다가 아파치 설정이 다 바뀌어서 고생만 잔뜩했다. 찾아보니 source로 설치했을때 이미 module을 설치했었다. yum으로 설치했던거 다시 지워서 해결
+
+- Error creating new order :: too many failed authorizations recently: see https://letsencrypt.org/docs/failed-validation-limit/
+ 유효하지 않은 요청을 여러번 했을 경우 뜨는 오류. 약 한시간 뒤에 재시도 하면 된다. 
+ 테스트가 필요한 경우 뒤에 --dry-run 을 붙여 발급이 유효한지 테스트 먼저 할 것!
+
+
+
+<!-- 도메인 변경, ssl 적용 -->
+1. serverName 바꾸기
+vi httpd-vhosts.conf 
+vi httpd-ssl.conf
+
+systemctl restart httpd
+
+이 상태로도 http로는 접근가능
+
+2. 도메인 추가x 재발급o - 인증서 path 바뀜
+
+3. httpd-ssl.conf certifications 경로 수정해야함
+
+
+
+
 
 
