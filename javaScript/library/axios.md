@@ -1,4 +1,24 @@
-## Axios
+# Axios
+
+## DELETE method body payload 사용하기
+
+- 주는 쪽
+```js
+const deleteOption = (id, option) => {
+  return httpClient
+    .delete(`${baseUrl}?id=${id}`, { data: { option } })
+    .then((res) => res.data);
+};
+```
+
+- 받는 쪽 (php)
+```php
+$params = json_decode(file_get_contents('php://input'), true);
+$option = $params['option'];
+```
+
+---
+
 ### error
 Axios.get returns plain html intead of JSON return data
 아직 해결 x => baseURL 설정으로 해결!
