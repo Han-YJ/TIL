@@ -74,22 +74,22 @@
   "results": [
     {
       "object": "page",
-      "id": "74508739-302e-432a-bd61-9d2618640ef8",
+      "id": "74508739-302e-432a",
       "created_time": "2022-11-14T05:47:00.000Z",
       "last_edited_time": "2022-11-14T05:50:00.000Z",
       "created_by": {
           "object": "user",
-          "id": "0ebf8de0-13c3-46d7-b216-61dc77eebcaf"
+          "id": "0ebf8de0-13c3-46d7-b216-"
       },
       "last_edited_by": {
           "object": "user",
-          "id": "484f408b-1dce-4183-9e1a-163b2ec12d70"
+          "id": "484f408b-1dce-4183-9e1a-"
       },
       "cover": null,
       "icon": null,
       "parent": {
           "type": "database_id",
-          "database_id": "c090b9b0-0d69-461c-b915-669d88810581"
+          "database_id": "c090b9b0-0d69-461c-b915-"
       },
       "archived": false,
       "properties": {
