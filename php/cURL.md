@@ -51,6 +51,6 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, $curlopt_fields);  //request body 설정
 
 ---
 ### 참고
-- [PHP cURL로 Notion api 사용하기]()
+- [PHP cURL로 Notion api 사용하기](cURL_Notion_api.md)
 - [curl 설치 및 사용법 - HTTP GET/POST, REST API 연계등](https://www.lesstif.com/software-architect/curl-http-get-post-rest-api-14745703.html)
 - [cURL 테스트 코드](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=vucket&logNo=220934898599)
