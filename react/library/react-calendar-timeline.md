@@ -2,6 +2,7 @@
   - 업데이트 안된지 좀 되긴했지만 그래도 사용 할 만 하다
 
 ## Usage
+{% raw %}
 ```js
     <Timeline
       className='sticky'
@@ -127,6 +128,7 @@ const ItemRenderer = ({ item, itemContext, getItemProps }) => {
 };
 
 ```
+{% endraw %}
 
 ### date format 바꾸기
 - date header를 한줄로 고정하고 간단하게 표현하기 위해 수정

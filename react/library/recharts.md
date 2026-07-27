@@ -14,6 +14,7 @@
 - flex 레이아웃에서 차트 안 그려지거나 오류 나면 아래 옵션 넣기
 - 부모에 고정 높이 주기 (예: `h-[550px] lg:h-[700px]`)
 
+{% raw %}
 ```tsx
 <ResponsiveContainer
   width="100%"
@@ -25,9 +26,10 @@
   <LineChart ... />
 </ResponsiveContainer>
 ```
+{% endraw %}
 
 - `minWidth={0}`, `minHeight={0}` : flex 기본 min 크기 때문에 overflow 방지
-- `initialDimension={{ width: 1, height: 1 }}` : SSR/초기 렌더 시 0x0 방지
+- {% raw %}`initialDimension={{ width: 1, height: 1 }}`{% endraw %} : SSR/초기 렌더 시 0x0 방지
 
 ---
 

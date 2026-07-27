@@ -9,6 +9,7 @@
     => exportCsv override로 해결 성공
 
 ## export csv override
+{% raw %}
 ```js
 <MaterialTable
   tableRef={tableRef}
@@ -78,6 +79,7 @@
   }}
 />
 ```
+{% endraw %}
 
 ## nested object 사용 시, sorting 안되는 문제
 customSort 설정

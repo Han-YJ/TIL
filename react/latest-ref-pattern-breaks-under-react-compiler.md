@@ -25,6 +25,7 @@ const columns = useMemo(() => [{
 
 ## 대체: Context 구독
 
+{% raw %}
 ```tsx
 const EditorContext = createContext(null);
 
@@ -38,6 +39,7 @@ function EditorCell() {
 }
 // columns는 여전히 안정: cell: () => <EditorCell />
 ```
+{% endraw %}
 
 - columns 안정성 유지 → 셀 remount 없음 → IME 보존 (원래 패턴의 목적 달성)
 - context 변경은 **컴파일러가 메모이즈해도 구독 컴포넌트의 재렌더를 보장** — ref와 달리 반응성이 계약에 포함됨

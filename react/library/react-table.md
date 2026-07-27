@@ -53,6 +53,7 @@ const toggleCancelColumns = (e) => {
 
 
 ## localization
+{% raw %}
 ```js
 const localization = {
   body: {
@@ -83,6 +84,7 @@ const localization = {
   }}
 />
 ```
+{% endraw %}
 
 ### 참고
 - https://github.com/mbrn/material-table/issues/2253

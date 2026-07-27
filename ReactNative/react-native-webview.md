@@ -1,5 +1,6 @@
 # React-native-webview
 
+{% raw %}
 ```js
 const styles = StyleSheet.create({
   container: {
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
     </View>
 //safe area를 위한 marginTop + webview
 ```
+{% endraw %}
 
 
 ## Issue
@@ -45,6 +47,7 @@ const handleClose = () => {
 ```
   
   WebView.js
+{% raw %}
 ```js
   const [webview, setWebview] = useState();
   const [goBackable, setGoBackable] = useState(false);
@@ -103,6 +106,7 @@ const handleClose = () => {
       />
 
 ```
+{% endraw %}
 
 ### backButton 처리 (여러번 누르면 종료메세지 & 종료 추가)
 ```js
