@@ -90,8 +90,47 @@ expect(after.width / after.height).toBeCloseTo(before.width / before.height, 1);
 
 저장값 검증은 따로 한다 — 저장 API 응답의 HTML 에서 `<img>` 의 `width`/`height` 속성을 읽는다. **편집 DOM 은 박스로, 저장본은 속성으로** 축을 나누면 둘 다 안정적이다.
 
+## 3. 정규식 정규화로는 모자라다 — 인라인 style 이 붙은 저장값
+
+1번의 `canonicalRichText` 를 넣은 뒤에도, 서식이 들어간 메모를 가진 일부 레코드에서 같은 증상이 다시 났다. 저장된 HTML 에 인라인 `style` 이 있었다.
+
+```html
+<!-- 저장값 -->
+<p><span style="color:#d92d20;font-weight:700">긴급</span></p>
+<!-- 편집기가 돌려준 값 -->
+<p><span style="color: rgb(217, 45, 32); font-weight: 700;">긴급</span></p>
+```
+
+### 왜 걸리나
+
+tiptap 은 문서를 자기 스키마로 파싱한 뒤 다시 직렬화한다. 이때 style 문자열은 브라우저 CSSOM 을 거치며 공백·색 표기·세미콜론이 바뀌고, 속성 순서나 스키마가 모르는 속성도 달라질 수 있다. 줄바꿈·빈 문단 같은 패턴은 정규식으로 흡수할 수 있지만, 이런 표기 변화는 경우의 수가 열려 있어서 정규식으로 따라잡을 수 없다.
+
+### 대응
+
+비교 기준을 바꾼다. 들어온 값을 **편집기와 같은 스키마로 한 번 직렬화한 결과**와 편집기의 현재 HTML 을 비교한다. 같은 직렬화기를 거치면 표기 차이는 양쪽에서 똑같이 생긴다.
+
+```ts
+import { createDocument, getHTMLFromFragment, type Editor } from '@tiptap/core';
+
+function normalizeHTML(editor: Editor, html: string): string {
+  const doc = createDocument(html, editor.schema);
+  return getHTMLFromFragment(doc.content, editor.schema);
+}
+
+// onUpdate 안에서
+onUpdate: ({ editor }) => {
+  const html = editor.getHTML();
+  const known = valueRef.current; // 부모가 준 마지막 value
+  if (known !== undefined && (sameRichText(html, known) || html === normalizeHTML(editor, known))) return;
+  onChange(html);
+}
+```
+
+이렇게 하면 이 비교는 폼 쪽이 아니라 **편집기 컴포넌트 안**에 들어가야 한다 — 스키마를 가진 곳이 편집기뿐이다. 결과적으로 1번의 "필드 컴포넌트에서 거른다"보다 한 단계 더 아래, 편집기 자체가 "사용자 입력이 아닌 변화는 알리지 않는다"는 계약을 갖게 된다.
+
 ## 정리
 
 - 리치 편집기는 입력값을 그대로 돌려주지 않는다. 빈 값·줄바꿈이 직렬화 과정에서 바뀐다.
 - 폼에 연결할 때는 정규화 동등 비교로 "사용자가 바꾼 것"만 통과시킨다.
 - 편집 중 DOM 과 저장된 HTML 은 표현이 다를 수 있다. 테스트는 각자 맞는 축(렌더 박스 / 저장 속성)으로 읽는다.
+- 표기가 열려 있는 차이(인라인 style 등)는 정규식 대신 편집기 스키마로 양쪽을 같은 직렬화기에 통과시켜 비교한다.
