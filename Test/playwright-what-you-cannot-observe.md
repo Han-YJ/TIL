@@ -99,6 +99,30 @@ async function commitSave(page) {
 
 단언을 약화한 게 아니라 **강화**한 것이다 — "보인다"에서 "직전 것이 사라진 뒤 정확히 1건"으로.
 
+### 반대로 "토스트가 안 떠야 한다"를 확인할 때
+
+위의 `toHaveCount(0)` 은 **기다리는** 용도라 맞다. 그런데 같은 단언을 "이 조작에는 완료 토스트가 없어야 한다"에 쓰면 거짓 초록이 된다.
+
+```ts
+await closeWithoutApply();
+await expect(toasts(page)).toHaveCount(0);   // ❌ 떴다가 사라져도 통과
+```
+
+`expect(...).toHaveCount(0)` 은 조건이 참이 될 때까지 재시도하는 단언이다. 토스트가 떠 있으면 사라질 때까지 기다리고, 자동 소멸 시간(수 초)이 expect 타임아웃보다 짧으면 **그대로 통과한다.** "떴다가 사라졌다"와 "애초에 안 떴다"는 다른 사실인데, 이 단언은 둘을 구분하지 못한다. 실제로 완료 토스트를 일부러 띄우게 고친 런에서도 초록이었다.
+
+부재를 확인하려면 재시도하지 않는 값으로 **그 순간**을 본다.
+
+```ts
+async function expectNoToast(page, hasText?: string) {
+  const target = hasText ? toasts(page).filter({ hasText }) : toasts(page);
+  expect(await target.count()).toBe(0);
+  await page.waitForTimeout(300);            // 렌더가 한 틱 늦는 경우까지
+  expect(await target.count()).toBe(0);
+}
+```
+
+같은 `toHaveCount(0)` 이라도 **"앞의 것이 걷히길 기다린다"면 맞고, "뜨면 안 된다"면 틀린다.** 저장소에서 이 단언을 찾으면 하나씩 열어 둘 중 어느 쪽인지 갈라야 한다 — 한 번 훑었을 때 8곳 중 7곳이 후자였다. 그리고 부재 단언인 만큼, 같은 셀렉터로 토스트가 **뜨는** 갈래를 대조군으로 같이 둔다.
+
 ## 정리
 
 셋의 공통점은 **단언이 아니라 채널이 틀렸다**는 것이다. 그리고 셋 다 초록으로 통과하거나 엉뚱한 곳에서 빨개져서, 로그를 안 열면 원인을 메커니즘으로 상상하게 된다. 나는 세 번 다 상상부터 했고 세 번 다 틀렸다.
