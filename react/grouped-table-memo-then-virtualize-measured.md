@@ -5,7 +5,7 @@
 ## 1. 측정 방법 — dev 숫자는 버린다
 
 - `next build --profile` 로 **프로덕션 + 프로파일링 빌드**를 띄운다. dev 빌드는 StrictMode 이중 렌더·개발용 검사 때문에 비율조차 믿을 수 없다.
-- 목록 섹션을 임시 `<Profiler onRender>` 로 감싸 commit 마다 `actualDuration` 을 `window` 배열에 쌓는다. 측정이 끝나면 되돌리고 커밋하지 않는다.
+- 목록 섹션을 임시 `<Profiler onRender>` 로 감싸 화면 반영(React commit — 렌더 결과를 DOM 에 적용하는 단계)마다 렌더 계산 시간(`actualDuration`)을 `window` 배열에 쌓는다. 측정이 끝나면 되돌리고 저장소에 남기지 않는다.
 - Playwright 로 진입 → 별 토글 → 정렬 → 그룹별 「더 보기」 를 누르고, 동작 전 배열을 비운 뒤 1.2초 뒤 수집한다.
   - `PerformanceObserver({ type: 'longtask' })` 합계 = 사용자가 체감하는 "멈춤"
   - `document.getElementsByTagName('*').length` = DOM 노드 수
@@ -16,15 +16,15 @@
 
 ## 2. 첫 숫자 — 비용이 행 수에 비례한다
 
-| 동작 | commit 합 | long task 합 | 4배 감속 long task |
+| 동작 | 렌더 계산 시간 합 | long task 합 | 4배 감속 long task |
 |---|---|---|---|
 | 첫 화면 (301행) | 87ms | 88ms | 908ms |
-| 별 토글 1회 (301행, commit 7번) | 147ms | 248ms | 908ms |
-| 정렬 (301행, commit 11번) | 234ms | 452ms | 1,724ms |
+| 별 토글 1회 (301행, 화면 반영 7번) | 147ms | 248ms | 908ms |
+| 정렬 (301행, 화면 반영 11번) | 234ms | 452ms | 1,724ms |
 | 「더 보기」 (778→844행) | 391ms | 694ms | 3,011ms |
 | 별 토글 1회 (844행) | 288ms | 509ms | 2,156ms |
 
-DOM 은 301행에 13,332개, 844행에 36,634개(행당 ~44). 별 하나에 commit 이 7번 돌고 매번 표 전체가 다시 그려지고 있었다.
+DOM 은 301행에 13,332개, 844행에 36,634개(행당 ~44). 별 하나에 화면 반영이 301행에서 7번, 844행에서 6번 일어났다(844행에서 한 번의 렌더 계산 최대 99ms).
 
 ## 3. memo — TanStack Table 에서 `React.memo` 기본 비교는 무력하다
 
@@ -33,12 +33,12 @@ DOM 은 301행에 13,332개, 844행에 36,634개(행당 ~44). 별 하나에 comm
 - **`Row` 객체는 data 가 바뀔 때마다 전부 새로 만들어진다.** 별 하나를 뒤집으면 낙관 갱신이 새 그룹 배열을 만들고, 행 모델이 통째로 재계산된다. 바뀌지 않은 행도 `row` prop 이 새 참조다.
 - 그래서 비교 기준을 **레코드 단위**로 바꿨다: `row.original` 참조 · `row.id` · `row.index` · 선택 여부(셀이 `row.getIsSelected()` 를 읽으므로 따로 prop 으로) · 컬럼 배열. 나머지 prop 은 얕은 비교.
   - TanStack Query 의 structural sharing 과 낙관 갱신의 `map(item => item.id === id ? {...item} : item)` 덕분에 안 바뀐 행은 `original` 이 같은 참조로 남는다.
-- **소비처 인라인 핸들러** (`onRowClick={(row) => ...}`) 가 매 렌더 새 함수라 비교가 또 깨진다. 공용 컴포넌트 안에서 "참조는 고정, 호출은 최신"인 콜백으로 감싸 소비처 25곳을 고치지 않았다. 최신 함수 대입은 렌더가 아니라 `useLayoutEffect` 에서 한다 ([latest-ref 패턴은 React Compiler 시대에 깨진다](./latest-ref-pattern-breaks-under-react-compiler.md) 의 경고와 같은 축 — 이벤트 핸들러에서만 부르는 콜백이라 커밋 후 대입이 문제되지 않는다).
+- **소비처 인라인 핸들러** (`onRowClick={(row) => ...}`) 가 매 렌더 새 함수라 비교가 또 깨진다. 공용 컴포넌트 안에서 "참조는 고정, 호출은 최신"인 콜백으로 감싸 소비처 25곳을 고치지 않았다. 최신 함수 대입은 렌더가 아니라 `useLayoutEffect` 에서 한다 ([latest-ref 패턴은 React Compiler 시대에 깨진다](./latest-ref-pattern-breaks-under-react-compiler.md) 의 경고와 같은 축 — 이벤트 핸들러에서만 부르는 콜백이라 화면 반영 뒤에 대입해도 문제되지 않는다).
 - **이 memo 는 계약을 바꾼다.** 이전엔 "셀은 부모와 함께 늘 다시 그려진다"가 공짜로 성립했다. memo 이후엔 셀이 `row` 와 컬럼만 읽어야 한다. 셀이 렌더 중 `ref.current` 로 외부 상태를 읽고 있었다면 이 순간 stale 버그가 된다 — 머지 전에 컬럼 정의 파일 전부에서 렌더 중 ref 읽기가 0건인지 확인했다. 계약은 공개 prop 의 JSDoc 에 적었다.
 
 memo 후:
 
-| 동작 | commit 합 | long task 합 | 4배 감속 long task |
+| 동작 | 렌더 계산 시간 합 | long task 합 | 4배 감속 long task |
 |---|---|---|---|
 | 별 토글 (844행) | 288 → **4ms** | 509 → **0ms** | 2,156 → 121ms |
 | 「더 보기」 (→844행) | 391 → **20ms** | 694 → **0ms** | 3,011 → 194ms |
@@ -61,7 +61,7 @@ memo 후:
 
 최종:
 
-| 동작 | commit 합 원본 → memo → 가상화 | long task 합 | 4배 감속 long task |
+| 동작 | 렌더 계산 시간 합 원본 → memo → 가상화 | long task 합 | 4배 감속 long task |
 |---|---|---|---|
 | 첫 화면 (309행) | 87 → 90 → **17ms** | 88 → 72 → **17ms** | 908 → 893 → 476ms |
 | 별 토글 (844행) | 288 → 4 → 3ms | 509 → 0 → 0ms | 2,156 → 121 → **0ms** |
