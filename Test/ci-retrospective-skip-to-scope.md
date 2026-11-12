@@ -75,7 +75,15 @@ vitest run --changed FETCH_HEAD --passWithNoTests
 - 디자인 시스템 컴포넌트 하나 → 77개 (`@acme/ui` 를 import 하는 테스트 전부)
 - 고를 테스트가 0개면 `--passWithNoTests` 로 성공 처리
 
-**함정 하나.** lockfile·`vitest.config.ts` 가 바뀌면 전부 다시 돌아야 하는데, `forceRerunTriggers` 를 설정해도 `--changed` 실행에서는 적용되지 않았다. lockfile 을 바꿔도 0개, 설정 파일을 바꿔도 0개가 골라졌다. 소스를 보니 `--changed` 는 git diff 를 그래프로 좁힐 뿐이고, `forceRerunTriggers` 는 watch 모드 쪽 장치였다. 그래서 「이 파일이 바뀌면 전체」는 vitest 에 맡기지 않고 CI 스크립트가 직접 판정하게 했다.
+**함정 하나.** 「이 파일이 바뀌면 전부」는 vitest 에 맡길 수 없었다. `--changed` 도 `forceRerunTriggers` 를 보긴 한다 — 바뀐 파일이 그 패턴에 걸리면 import 그래프를 건너뛰고 전체를 고른다. 그런데 기본 패턴 그대로 파일 하나씩 바꿔 재 보니 결과가 고르지 않았다.
+
+| 바꾼 파일 | 골라진 테스트 파일 |
+|---|---|
+| `package.json` | 633개 전부 |
+| `vitest.config.ts` | 0개 |
+| lockfile | 0개 |
+
+lockfile 은 기본 패턴에 없고, 설정 파일은 패턴에 있는데도 걸리지 않았다. 반대로 `package.json` 은 의존성을 하나 더하기만 해도 전체가 돈다. 정작 전체가 필요한 lockfile · 설정 변경은 놓치고, 영향 범위로 충분한 의존성 추가는 전체로 키우는 셈이다. 그래서 「이 파일이 바뀌면 전체」는 vitest 에 기대지 않고 CI 스크립트가 직접 판정하게 했다.
 
 ### Storybook — 도구가 못 해 줘서 직접 그렸다
 
